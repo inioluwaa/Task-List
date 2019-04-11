@@ -10,30 +10,31 @@ function addTask(e) {
   if (taskInput.value === '') {
     alert('Add a task');
   }
+  else {
+    // Create li elements
+    const li = document.createElement('li');
+    // Add class
+    li.className = 'collection-item';
+    // Create text node and append to the li
+    li.appendChild(document.createTextNode(taskInput.value));
 
-  // Create li elements
-  const li = document.createElement('li');
-  // Add class
-  li.className = 'collection-item';
-  // Create text node and append to the li
-  li.appendChild(document.createTextNode(taskInput.value));
+    // Create new link element
+    const link = document.createElement('a');
+    // Add class
+    link.className = 'delete-item secondary-content';
+    // Add icon html
+    link.innerHTML = '<i class="fa fa-remove"></i>';
+    // Append link to li
+    li.appendChild(link);
 
-  // Create new link element
-  const link = document.createElement('a');
-  // Add class
-  link.className = 'delete-item secondary-content';
-  // Add icon html
-  link.innerHTML = '<i class="fa fa-remove"></i>';
-  // Append link to li
-  li.appendChild(link);
+    // Append ul to li
+    taskList.appendChild(li);
 
-  // Append ul to li
-  taskList.appendChild(li);
+    // Clear input
+    taskInput.value = '';
 
-  // Clear input
-  taskInput.value = '';
-
-  e.preventDefault();
+    e.preventDefault();
+  }
 }
 
 // Remove Task
@@ -47,7 +48,16 @@ function RemoveTask(e) {
 
 // Clear Tasks
 function clearTasks() {
-  taskList.innerHTML = '';
+  // taskList.innerHTML = '';
+
+  // Alternate method
+  while (taskList.firstChild) {
+    taskList.removeChild(taskList.firstChild);
+  }
+}
+
+function filterTasks() {
+
 }
 
 // Load all event listeners
@@ -58,6 +68,8 @@ function loadEventListeners() {
   taskList.addEventListener('click', RemoveTask);
   // Clear task event
   clearBtn.addEventListener('click', clearTasks);
+  // Filter task event
+  filter.addEventListener('keyup', filterTasks);
 }
 
 // Load all event listeners
