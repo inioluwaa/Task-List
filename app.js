@@ -5,6 +5,20 @@ const clearBtn = document.querySelector('.clear-tasks');
 const filter = document.querySelector('#filter');
 const taskInput = document.querySelector('#task');
 
+function storeTaskInLocalStorage(task) {
+  let tasks;
+  if (localStorage.getItem('tasks') === null) {
+    tasks = [];
+  }
+  else {
+    tasks = JSOn.parse(localStorage.getItem('tasks'));
+  }
+
+  tasks.push(task);
+
+  localStorage.setItem('tasks', JSON.stringify(tasks));
+}
+
 // Add Task
 function addTask(e) {
   if (taskInput.value === '') {
@@ -29,6 +43,9 @@ function addTask(e) {
 
     // Append ul to li
     taskList.appendChild(li);
+
+    // Store in LS
+    storeTaskInLocalStorage(taskInput.value);
 
     // Clear input
     taskInput.value = '';
